@@ -54,9 +54,8 @@ interactions.
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Player> (Player.class));
     }
 
-using Spring JDBC's jdbcTemplate to execute a query(SELECT) and retrieve a list of Player objects, with each row of the
+using Spring JDBC's jdbcTemplate to execute a query(SELECT  ...) and retrieve a list of Player objects, with each row of the
 result
 set mapped to a Player object using the BeanPropertyRowMapper. The BeanPropertyRowMapper relies on the naming
 conventions of the JavaBean properties to map the columns of the result set to the corresponding properties of the
-Player class.
- 
+Player class. IN playerDao I write more functions about for those queries SELECT UPDATE INSERT DELETE and DDL.
