@@ -1,8 +1,16 @@
-package com.springdata.tennisplayer;
+package com.springdata.springdatajpa;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.util.Date;
+@Entity
 
 public class Player {
+    @Id
+    @GeneratedValue
     private int id;
     private String name;
     private String nationality;
@@ -11,7 +19,17 @@ public class Player {
 
     public Player() {
     }
-  // this constructor use for initialize and update in a db
+
+    public Player(String name, String nationality, Date birthDate, int titles) {
+        super();
+        this.name = name;
+        this.nationality = nationality;
+        this.birthDate = birthDate;
+        this.titles = titles;
+    }
+
+
+
     public Player(int id, String name, String nationality, Date birthDate, int titles) {
         this.id = id;
         this.name = name;

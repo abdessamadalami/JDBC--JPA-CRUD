@@ -54,8 +54,82 @@ interactions.
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Player> (Player.class));
     }
 
-using Spring JDBC's jdbcTemplate to execute a query(SELECT  ...) and retrieve a list of Player objects, with each row of the
+using Spring JDBC's jdbcTemplate to execute a query(SELECT ...) and retrieve a list of Player objects, with each row of
+the
 result
 set mapped to a Player object using the BeanPropertyRowMapper. The BeanPropertyRowMapper relies on the naming
 conventions of the JavaBean properties to map the columns of the result set to the corresponding properties of the
 Player class. IN playerDao I write more functions about for those queries SELECT UPDATE INSERT DELETE and DDL.
+
+### **_JDBC & JPA:_**
+
+JDBC is a lower-level API that requires manual SQL coding and provides more control, while JPA is a higher-level API
+that offers abstraction and simplifies database interactions by mapping Java objects to database tables. JPA reduces the
+amount of boilerplate code required for database operations and offers enhanced portability across different database
+systems.
+
+### **_JPA_**
+
+Using JPA, we can map a Java class or bean to a table. The members of the class map columns in the table. When this
+mapping is defined, JPA can write queries on its own. It takes the responsibility of creating and executing queries for
+CRUD operations. This is due to the fact that the operations performed on a database are identical and can be
+generalized. The types of objects change based on the database schema but the operations remain the same.
+
+![](/nfs/homes/ael-oual/Downloads/tennis-player/imgs/JPA.png)
+
+#### **_Defining an Entity_**
+
+To use JPA in your Java project, you need to include the JPA dependency in your project's build configuration. This
+dependency typically comes from a JPA implementation such as Hibernate or EclipseLink.
+
+@Entity:
+The @Entity annotation is used to mark a Java class as an entity, indicating that it corresponds to a database table.
+Each instance of the entity class represents a row in the table.
+
+@Table:
+The @Table annotation is used to specify the details of the corresponding database table for an entity class. It allows
+you to define the table name, schema, and other properties related to the table.
+
+@Id and @GeneratedValue:
+The @Id annotation is used to mark a field in an entity class as the primary key of the corresponding database table. It
+indicates that the field uniquely identifies each row in the table.
+
+The @GeneratedValue annotation is used in combination with @Id to specify the strategy for generating the primary key
+values. It allows you to define how the primary key values should be generated, such as using an auto-incrementing
+column or a sequence.
+
+@Column:
+The @Column annotation is used to specify the mapping of an entity class field to a column in the corresponding database
+table. It allows you to define the column name, data type, constraints, and other properties related to the column.
+
+## **_Creating a Repository_**
+
+In JPA terms, a repository is a class that manages the entities.
+* more about data transactions 
+* orm
+
+### **_CRUD Operations_**
+
+CRUD is shorthand referring to the most common types of queries: create, insert, update, and delete.
+     
+      // INSERT
+    public Player insertPlayer(Player player)
+    {
+        return entityManager.merge(player);
+    }
+    //UPDATE
+    public Player updatePlayer(Player player)
+    {
+        return entityManager.merge(player);
+    }
+    //FIND
+    public Player getPlayerById(int id) {
+        return entityManager.find(Player.class, id);
+    }
+
+    // delete
+    public void deleteById(int id){
+        Player player = entityManager.find(Player.class, id);
+        entityManager.remove(player);
+    }
+### **_JPQL Named Query_**
