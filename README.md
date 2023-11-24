@@ -105,13 +105,14 @@ table. It allows you to define the column name, data type, constraints, and othe
 ## **_Creating a Repository_**
 
 In JPA terms, a repository is a class that manages the entities.
-* more about data transactions 
+
+* more about data transactions
 * orm
 
 ### **_CRUD Operations_**
 
 CRUD is shorthand referring to the most common types of queries: create, insert, update, and delete.
-     
+
       // INSERT
     public Player insertPlayer(Player player)
     {
@@ -132,4 +133,39 @@ CRUD is shorthand referring to the most common types of queries: create, insert,
         Player player = entityManager.find(Player.class, id);
         entityManager.remove(player);
     }
+
 ### **_JPQL Named Query_**
+
+@NamedQuery
+To create a named query, we will use the @NamedQuery annotation on the Player class. This annotation requires two
+parameters: the name of the query and the query itself. When using JPA, we will write the query in JPQL instead of SQL.
+JPQL uses entities in place of tables. Since we want to return a list of Player objects, the query will be "SELECT p
+FROM Player p".
+
+    @Entity
+    @NamedQuery(name="get_all_players", query="select p from Player p")
+
+### **_Spring DATA_**
+
+We have written methods to perform CRUD operations on the Player entity. If we add more entities to the project like
+Coach and Tournament, we will have to write the same code for CRUD operations and plug a different entity type.
+
+The methods that we implemented as part of the CRUD operations are all generic methods. The logic of the methods remains
+the same, and only the entity changes.
+
+Spring Data identified this duplication of code when writing repositories and created some predefined repositories. The
+developer provides the entity type and its primary key and Spring Data comes up with the CRUD methods for the entity.
+Spring Data JPA adds a layer of abstraction over the JPA provider (Hibernate in our case).
+
+### **_Connecting to Other Databases_**
+An in-memory H2 database is easy to set up and use. Now it’s time to learn how to switch to another database. In
+real-life applications, we might want to connect to Oracle, MySql, or SQL server databases. Using Spring Boot, switching
+databases is very straightforward. We just need to add some dependencies and change some property values.
+
+For any database, we need to configure its URL, username, and password. These values are specified in the
+application.properties file.
+
+spring.jpa.hibernate.ddl-auto=none
+spring.datasource.url = jdbc:mysql://localhost:3306/movie_example
+spring.datasource.username = demo
+spring.datasource.password = demo
